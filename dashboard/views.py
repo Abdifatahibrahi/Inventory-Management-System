@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse('This is the index page')
+    return render(request, 'dashboard/index.html')
 
 def staff(request):
-    return HttpResponse('This is the staff page')
+    return render(request, 'dashboard/staff.html')
