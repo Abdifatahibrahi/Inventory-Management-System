@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dashboard.apps.DashboardConfig',
+    'user.apps.UserConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +69,8 @@ TEMPLATES = [
         },
     },
 ]
+
+
 
 WSGI_APPLICATION = 'Inventory_System.wsgi.application'
 
@@ -132,3 +136,6 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = (BASE_DIR/'asert/')
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
