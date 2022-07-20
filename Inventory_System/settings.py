@@ -139,3 +139,7 @@ STATIC_ROOT = (BASE_DIR/'asert/')
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# LOGIN_URL = 'dashboard-index'
+
+LOGIN_REDIRECT_URL = 'dashboard-index'
