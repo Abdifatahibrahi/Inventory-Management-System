@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
+from django.contrib.auth.models import User
 
 def register(request):
 
@@ -15,3 +16,7 @@ def register(request):
         'form': form 
     }
     return render(request, 'user/register.html', context)
+
+def profile(request):
+   
+    return render(request, 'user/profile.html', {})
