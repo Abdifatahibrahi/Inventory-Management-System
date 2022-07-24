@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateUserForm
+
+import user
+from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.models import User
 
 def register(request):
@@ -20,3 +22,26 @@ def register(request):
 def profile(request):
    
     return render(request, 'user/profile.html', {})
+
+
+def profile_update(requests):
+    if requests.method == 'POST':
+        user_form = UserUpdateForm(requests.POST, instance=requests.user)
+        profile_form = ProfileUpdateForm(requests.POST, requests.FILES, instance=requests.user.profile)
+
+        if user_form.is_valid() & profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('user-profile')
+
+
+    else:
+        user_form = UserUpdateForm(instance=requests.user)
+        profile_form = ProfileUpdateForm(instance=requests.user.profile)
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form
+
+    }
+
+    return render(requests, 'user/profile_update.html', context)
