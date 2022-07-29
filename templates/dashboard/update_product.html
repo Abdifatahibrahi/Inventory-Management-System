@@ -1,0 +1,30 @@
+
+{% extends 'partials/base.html' %}
+{% block title %}Product Update Page{% endblock title %}
+{% load crispy_forms_tags %}
+
+ 
+{% include 'partials/topnav.html' %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row my-4 offset-md-3">
+        <div class="col-md-8">
+            <div class="border bg-white p-3">
+                <h4>Update Products</h4>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+
+                    <input class="btn btn-success btn-block" type="submit" value="Add Product">
+
+                </form>
+            </div>
+        </div>
+</div>
+
+{% endblock content %}
+
+

@@ -1,8 +1,9 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Product
-from .forms import ProductForm
+from .models import Product, Order
+from .forms import ProductForm, UpdateProductForm
+from django.contrib.auth.models import User
 
 
 @login_required(login_url='user-login')
@@ -11,7 +12,19 @@ def index(request):
 
 @login_required(login_url='user-login')
 def staff(request):
-    return render(request, 'dashboard/staff.html')
+    staff = User.objects.all()
+    context = {
+        'staff': staff
+    }
+    return render(request, 'dashboard/staff.html', context)
+
+def staff_detail(request, pk):
+    worker = User.objects.get(id=pk)
+    context = {
+        'worker': worker
+    }
+    return render(request, 'dashboard/staff_detail.html', context)
+
 
 @login_required(login_url='user-login')
 def product(request):
@@ -33,7 +46,11 @@ def product(request):
 
 @login_required(login_url='user-login')
 def order(request):
-    return render(request, 'dashboard/order.html')
+    orders = Order.objects.all()
+    context = {
+        'orders': orders
+    }
+    return render(request, 'dashboard/order.html', context)
 
 
 def delete_product(request, pk):
@@ -42,5 +59,18 @@ def delete_product(request, pk):
     if request.method == 'POST':
         item.delete()
         return redirect("dashboard-product")
-
     return render(request, 'dashboard/product_delete.html')
+
+
+def update_product(request, pk):
+    product = Product.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard-product')
+    else:
+        form = ProductForm(instance=product)
+    
+    return render(request, 'dashboard/update_product.html', {'form': form})
