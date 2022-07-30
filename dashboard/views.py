@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Product, Order
 from .forms import ProductForm, UpdateProductForm, OrderForm
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 
 @login_required(login_url='user-login')
@@ -51,6 +52,8 @@ def product(request):
         form = form = ProductForm(request.POST)
         if form.is_valid():
             form.save()
+            product = form.cleaned_data.get('name')
+            messages.success(request, f"{product} has been added")
             return redirect('dashboard-product')
     else:
         form = form = ProductForm()

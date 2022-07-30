@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 import user
 from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 def register(request):
 
@@ -11,6 +12,8 @@ def register(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f"{username} Account has been created")
             return redirect('user-login')
     else:
         form = CreateUserForm()
